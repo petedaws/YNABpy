@@ -1,4 +1,4 @@
-<VirtualHost *:8050>
+<VirtualHost *:80>
 	ServerAdmin webmaster@localhost
 
 	DocumentRoot /opt/YNABpy/www/html
