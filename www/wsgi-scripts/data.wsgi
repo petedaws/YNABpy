@@ -19,7 +19,7 @@ def application(environ, start_response):
 	categories = yparser.get_category_lister()
 	sub_categories = get_sub_categories(categories)
 	resp = json.dumps({'payees':list(set([payee.get_name() for payee in payees.get_content()])),
-					   'categories':sub_categories]})
+					   'categories':sub_categories})
 	status = '200 OK'
 	headers = [\
 		('Content-type', 'application/json'),
