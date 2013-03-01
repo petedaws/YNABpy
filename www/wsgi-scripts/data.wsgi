@@ -10,8 +10,8 @@ def application(environ, start_response):
 	yparser = Parser.YNAB3_Parser(YNAB_DATA_FILE)
 	payees = yparser.get_payee_lister()
 	categories = yparser.get_category_lister()
-	resp = json.dumps({'payees':payees.get_content(),
-					   'categories':categories.get_content()})
+	resp = json.dumps({'payees':[payee.get_name() for payee in payees.get_content()],
+					   'categories':[category.get_name() for category in categories.get_content()]})
 	status = '200 OK'
 	headers = [\
 		('Content-type', 'application/json'),
