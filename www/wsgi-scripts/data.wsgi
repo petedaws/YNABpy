@@ -2,7 +2,7 @@
 import json
 import sys
 import os
-sys.path.append('/opt/YNAB')
+sys.path.append('/opt/YNABpy')
 from YNABpy import Parser
 
 def application(environ, start_response):
