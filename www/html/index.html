@@ -1,0 +1,47 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>YNAB DataEntry</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script>
+	function send_data_request() {
+		$.ajax({
+			type : 'GET',
+			url : '/data',
+			success : request_handler,
+			dataType : 'json',
+			timeout : 2500,
+			cache : false
+		});
+	}
+
+	function request_handler(result, status, xhr) {
+		$( "#payee" ).autocomplete({
+		  source: result['payees'],
+		});
+		
+		$( "#category" ).autocomplete({
+		  source: result['categories'],
+		});
+	}
+	send_data_request()
+</script>
+</head>
+<body>
+ 
+<div class="ui-widget">
+  <label for="payee">Payee: </label>
+  <input id="payee" />
+</div>
+
+<div class="ui-widget">
+  <label for="category">Category: </label>
+  <input id="category" />
+</div>
+ 
+</body>
+</html>

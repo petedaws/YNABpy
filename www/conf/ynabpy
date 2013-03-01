@@ -1,0 +1,29 @@
+<VirtualHost *:8050>
+	ServerAdmin webmaster@localhost
+
+	DocumentRoot /opt/ynabpy/www/html
+
+	<Directory /opt/ynabpy/www/html>
+		AuthType Basic
+		AuthName "ynabpy Restricted Access"
+		AuthUserFile /opt/ynabpy/www/htpasswd
+		Require valid-user
+		SetEnvIf Request_URI "^/favicon.ico$" allow
+		Order allow,deny
+		Allow from env=allow
+		Satisfy Any
+	</Directory>
+
+	ScriptAlias /payee /opt/ynabpy/www/wsgi-scripts/payee.wsgi
+	ScriptAlias /transaction /opt/ynabpy/www/wsgi-scripts/transaction.wsgi
+
+	<Directory /opt/ynabpy/www/wsgi-scripts>
+		AddHandler wsgi-script .wsgi
+		AuthType Basic
+		AuthName "ynabpy"
+		AuthUserFile /opt/ynabpy/www/htpasswd
+		Require valid-user
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>

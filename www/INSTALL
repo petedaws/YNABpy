@@ -1,0 +1,12 @@
+apt-get update
+apt-get install apache2 libapache2-mod-wsgi
+a2enmod wsgi
+cp conf/ynabpy /etc/apache2/sites-available
+a2dissite default
+a2ensite ynabpy
+echo >> /etc/hosts
+service apache2 start
+update-rc.d apache2 defaults
+cd /opt/ynabpy/www
+htpasswd -c htpasswd <username>
+	<enter password>
