@@ -8,8 +8,8 @@ from YNABpy.Category import YNAB3_SubCategory
 
 def get_sub_categories(categories):
 	sub_categories = []
-	for category in categories:
-		sub_categories.extend(category.get_children())
+	for category in categories.get_content():
+		sub_categories.extend([sub_category.get_name() for sub_category in category.get_children()])
 	return sub_categories
 
 def application(environ, start_response):
