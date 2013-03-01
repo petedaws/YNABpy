@@ -7,6 +7,20 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<style>
+	.ui-autocomplete {
+		max-height: 400px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+	}
+	/* IE 6 doesn't support max-height
+	* we use height instead, but this forces the menu to always be this tall
+	*/
+	* html .ui-autocomplete {
+		height: 400px;
+	}
+	</style>
 	<script>
 	function send_data_request() {
 		$.ajax({
@@ -20,11 +34,25 @@
 
 	function request_handler(result, status, xhr) {
 		$( "#payee" ).autocomplete({
-		  source: result['payees'],
+			source: function(request, response ) {
+				var matches = $.map(result['payees'], function(payee) {
+				if ( payee.toUpperCase().indexOf(request.term.toUpperCase()) === 0 ) {
+					return payee;
+				}
+				});
+				response(matches);
+			}
 		});
 		
 		$( "#category" ).autocomplete({
-		  source: result['categories'],
+			source: function(request, response ) {
+				var matches = $.map(result['categories'], function(category) {
+				if ( category.toUpperCase().indexOf(request.term.toUpperCase()) === 0 ) {
+					return category;
+				}
+				});
+				response(matches);
+			}
 		});
 	}
 	send_data_request()
